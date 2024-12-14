@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레트로 포트폴리오</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0F0;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        /* Typing Animation */
+        .typing-container {
+            text-align: center;
+            color: #0F0;
+            font-size: 32px;
+            font-weight: bold;
+            border-right: 2px solid #0F0;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 4s steps(10, end), blink 0.5s step-end infinite;
+        }
+        @keyframes typing {
+            0% { width: 0; }
+            100% { width: 12ch; }
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        /* Main Content Section */
+        .container {
+            background-color: #222;
+            border: 3px solid #0F0;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 0 20px #0F0;
+            position: relative;
+            margin-top: 20px;
+        }
+        .menu {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 2px solid #0F0;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .menu-item {
+            cursor: pointer;
+            padding: 5px 15px;
+            border: 1px solid #0F0;
+            transition: all 0.3s ease;
+        }
+        .menu-item:hover {
+            background-color: #0F0;
+            color: #000;
+            box-shadow: 0 0 10px #0F0;
+        }
+        .terminal-text {
+            white-space: pre-wrap;
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            border-top: 1px dashed #0F0;
+            border-bottom: 1px dashed #0F0;
+            margin: 10px 0;
+            animation: flicker 0.1s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .project-item {
+            background-color: #000;
+            border: 2px solid #0F0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 150px; /* 카드의 고정 높이 */
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .project-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #0F0;
+        }
+        .project-item .project-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .project-item .description {
+            font-size: 14px;
+            color: #0F0;
+            opacity: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 5px;
+            border: 1px dashed #0F0;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            transition: opacity 0.3s ease;
+        }
+        .project-item:hover .description {
+            opacity: 1;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            border-top: 1px dashed #0F0;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="typing-container">Portfolio</div>
+
+    <div class="container">
+        <div class="menu">
+            <div class="menu-item" onclick="showSection('about')">ABOUT</div>
+            <div class="menu-item" onclick="showSection('projects')">PROJECTS</div>
+            <div class="menu-item" onclick="showSection('contact')">CONTACT</div>
+        </div>
+        <div id="content" class="terminal-text"></div>
+        <div class="footer">© 2024 Kwon Tae-woo. All Rights Reserved.</div>
+    </div>
+
+    <script>
+        const typingContainer = document.querySelector('.typing-container');
+
+        function resetAnimation() {
+            typingContainer.style.animation = 'none';
+            void typingContainer.offsetWidth;
+            typingContainer.style.animation = 'typing 4s steps(10, end), blink 0.5s step-end infinite';
+        }
+
+        setInterval(resetAnimation, 6000);
+
+        const sections = {
+            about: `
+[ ABOUT ME ]
+-------------------------------
+이름: Kwon Tae-woo
+직업: 백엔드 개발자
+관심 분야: 웹 개발, 시스템 설계
+
+💻 프로그래밍 기술:
+- 사용 가능 기술:
+    - Python
+    - C
+    - HTML/CSS/JavaScript
+    - Express.js
+    - Java
+
+- 배우고 있는 기술:
+    - TypeScript
+    - Vue.js
+    - AWS
+    - Node.js
+    - Spring Boot
+    - Go
+    - React.js
+    - Docker
+   
+🛠️데이터베이스:
+    - MySQL
+
+🎓 학력:
+    2024-현재: Gyeongbuk Software High School
+            `,
+            projects: `
+<div class="projects-grid">
+    <div class="project-item" onclick="showProjectDetails(1)">
+        <div class="project-title">SafeReach</div>
+        <div class="description">실시간 응급 알림 및 지도 표시</div>
+    </div>
+    <div class="project-item" onclick="showProjectDetails(2)">
+        <div class="project-title">WebCoder</div>
+        <div class="description">코딩 학습을 위한 인터랙티브 플랫폼</div>
+    </div>
+    <div class="project-item" onclick="showProjectDetails(3)">
+        <div class="project-title">Color Matching Puzzle</div>
+        <div class="description">레트로 감성의 퍼즐 게임</div>
+    </div>
+    <div class="project-item" onclick="showProjectDetails(4)">
+        <div class="project-title">Stock Viewer</div>
+        <div class="description">실시간 주식 데이터 시각화</div>
+    </div>
+    <div class="project-item" onclick="showProjectDetails(5)">
+        <div class="project-title">EcoTrack</div>
+        <div class="description">환경 활동 추적 및 점수 통계</div>
+    </div>
+    <div class="project-item" onclick="showProjectDetails(6)">
+        <div class="project-title">QR Code Generator</div>
+        <div class="description">주소를 QR 코드로 변환</div>
+    </div>
+</div>
+
+            `,
+            contact: `
+[ CONTACT ]
+-------------------------------
+📧 이메일: jonadan0209@gmail.com
+📱 연락처: 010-4513-8966
+💼 insta: https://www.instagram.com/xodn_08/
+🌐 GitHub: github.com/jonadan0
+            `
+        };
+
+        const projectDetails = {
+            1: `
+        [ SafeReach ]
+        -------------------------------
+        - 실시간 응급 알림 및 위치 기반 지도 표시
+        - Swift로 개발
+        - 사용자와 주변 지원자 연결
+                    `,
+            2: `
+        [ WebCoder ]
+        -------------------------------
+        - React와 Express.js로 개발
+        - 코딩 학습을 위한 인터랙티브 플랫폼
+        - 사용자 맞춤형 코딩 챌린지 제공
+                    `,
+            3: `
+        [ Color Matching Puzzle ]
+        -------------------------------
+        - HTML, CSS, JavaScript로 구현
+        - 레트로 퍼즐 게임 감성
+        - UI/UX 최적화 및 반응형 디자인
+                    `,
+            4: `
+        [ Stock Viewer ]
+        -------------------------------
+        - Java Swing 기반의 실시간 주식 데이터 시각화 도구
+        - 사용자 친화적인 UI와 실시간 차트
+        - 주식 가격 변동 알림 기능
+                    `,
+            5: `
+        [ EcoTrack (개발중) ]
+        -------------------------------
+        - 환경 보호 활동을 추적하고 점수를 기록
+        - 사용자 친화적인 통계 및 리더보드 표시
+        - Swift로 개발
+                    `,
+            6: `
+        [ QR Code Generator ]
+        -------------------------------
+        - Python Flask로 개발
+        - URL을 QR 코드로 변환하여 저장
+        - 사용자 인터페이스는 React로 구성
+                    `
+        };
+        
+
+        function showSection(sectionName) {
+            const contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = sections[sectionName];
+        }
+
+        function showProjectDetails(projectId) {
+            const contentDiv = document.getElementById('content');
+            contentDiv.textContent = projectDetails[projectId];
+        }
+
+        showSection('about');
+    </script>
+</body>
+</html>
