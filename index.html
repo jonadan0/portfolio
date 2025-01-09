@@ -145,16 +145,6 @@
     </div>
 
     <script>
-        const typingContainer = document.querySelector('.typing-container');
-
-        function resetAnimation() {
-            typingContainer.style.animation = 'none';
-            void typingContainer.offsetWidth;
-            typingContainer.style.animation = 'typing 4s steps(10, end), blink 0.5s step-end infinite';
-        }
-
-        setInterval(resetAnimation, 6000);
-
         const sections = {
             about: `
 [ ABOUT ME ]
@@ -200,37 +190,53 @@
             `,
             projects: `
 <div class="projects-grid">
-    <div class="project-item" onclick="showProjectDetails(1)">
+    <div class="project-item" onclick="showSection('team')">
+        <div class="project-title">TEAM PROJECTS</div>
+        <div class="description">TEAM VIEW</div>
+    </div>
+    <div class="project-item" onclick="showSection('personal')">
+        <div class="project-title">PERSONAL PROJECTS</div>
+        <div class="description">PERSONAL VIEW</div>
+    </div>
+</div>
+            `,
+            team: `
+<div class="projects-grid">
+    <div class="project-item" onclick="showProjectDetails('team1')">
         <div class="project-title">SafeReach</div>
         <div class="description">실시간 응급 알림 및 지도 표시</div>
     </div>
-    <div class="project-item" onclick="showProjectDetails(2)">
-        <div class="project-title">WebCoder</div>
-        <div class="description">코딩 학습을 위한 인터랙티브 플랫폼</div>
-    </div>
-    <div class="project-item" onclick="showProjectDetails(3)">
-        <div class="project-title">Color Matching Puzzle</div>
-        <div class="description">레트로 감성의 퍼즐 게임</div>
-    </div>
-    <div class="project-item" onclick="showProjectDetails(4)">
-        <div class="project-title">Stock Viewer</div>
-        <div class="description">실시간 주식 데이터 시각화</div>
-    </div>
-    <div class="project-item" onclick="showProjectDetails(5)">
+    <div class="project-item" onclick="showProjectDetails('team2')">
         <div class="project-title">EcoTrack</div>
         <div class="description">환경 활동 추적 및 점수 통계</div>
     </div>
-    <div class="project-item" onclick="showProjectDetails(6)">
+</div>
+            `,
+            personal: `
+<div class="projects-grid">
+    <div class="project-item" onclick="showProjectDetails('personal1')">
+        <div class="project-title">WebCoder</div>
+        <div class="description">코딩 학습을 위한 인터랙티브 플랫폼</div>
+    </div>
+    <div class="project-item" onclick="showProjectDetails('personal2')">
+        <div class="project-title">Color Matching Puzzle</div>
+        <div class="description">레트로 감성의 퍼즐 게임</div>
+    </div>
+    <div class="project-item" onclick="showProjectDetails('personal3')">
+        <div class="project-title">Stock Viewer</div>
+        <div class="description">실시간 주식 데이터 시각화</div>
+    </div>
+    <div class="project-item" onclick="showProjectDetails('personal4')">
         <div class="project-title">QR Code Generator</div>
         <div class="description">주소를 QR 코드로 변환</div>
     </div>
-    <div class="project-item" onclick="showProjectDetails(7)">
+     <div class="project-item" onclick="showProjectDetails('personal5')">
         <div class="project-title">YOUTUBE DOWNLOAD</div>
         <div class="description">유튜브영상 다운로드 및 여러기능</div>
     </div>
 </div>
-
             `,
+
             contact: `
 [ CONTACT ]
 -------------------------------
@@ -242,58 +248,64 @@
         };
 
         const projectDetails = {
-            1: `
-        [ SafeReach(개발중) ]
-        -------------------------------
-        - 실시간 응급 알림 및 위치 기반 지도 표시
-        - Swift로 개발
-        - 사용자와 주변 지원자 연결
-                    `,
-            2: `
-        [ WebCoder ]
-        -------------------------------
-        - React와 Express.js로 개발
-        - 코딩 학습을 위한 인터랙티브 플랫폼
-        - 사용자 맞춤형 코딩 챌린지 제공
-                    `,
-            3: `
-        [ Color Matching Puzzle ]
-        -------------------------------
-        - HTML, CSS, JavaScript로 구현
-        - 레트로 퍼즐 게임 감성
-        - UI/UX 최적화 및 반응형 디자인
-                    `,
-            4: `
+            team1: `
+[ SafeReach(개발중) ]
+-------------------------------
+- 실시간 응급 알림 및 위치 기반 지도 표시
+- Swift로 개발
+- 사용자와 주변 지원자 연결
+            `,
+            team2: `
+[ EcoTrack (개발중) ]
+-------------------------------
+- 환경 보호 활동을 추적하고 점수를 기록
+- 사용자 친화적인 통계 및 리더보드 표시
+- Swift로 개발
+            `,
+            team3: `
+[ Smart Factory Simulation ]
+-------------------------------
+- 스마트 팩토리 시스템 설계 및 시뮬레이션 프로젝트
+- 팀 단위로 구현 및 결과 분석
+            `,
+            personal1: `
+[ WebCoder ]
+-------------------------------
+- React와 Express.js로 개발
+- 코딩 학습을 위한 인터랙티브 플랫폼
+- 사용자 맞춤형 코딩 챌린지 제공
+            `,
+            personal2: `
+[ Color Matching Puzzle ]
+-------------------------------
+- HTML, CSS, JavaScript로 구현
+- 레트로 퍼즐 게임 감성
+- UI/UX 최적화 및 반응형 디자인
+            `,
+            personal3:`
         [ Stock Viewer ]
         -------------------------------
         - Java Swing 기반의 실시간 주식 데이터 시각화 도구
         - 사용자 친화적인 UI와 실시간 차트
         - 주식 가격 변동 알림 기능
                     `,
-            5: `
-        [ EcoTrack (개발중) ]
-        -------------------------------
-        - 환경 보호 활동을 추적하고 점수를 기록
-        - 사용자 친화적인 통계 및 리더보드 표시
-        - Swift로 개발
-                    `,
-            6: `
-        [ QR Code Generator ]
-        -------------------------------
-        - GOLANG으로 개발
-        - URL을 QR 코드로 변환하여 저장
-        - 사용자 인터페이스는 HTML,CSS로 구성
-                    `,
-            7: `
-        [ YOUTUBE DOWNLOAD ]
-        -------------------------------
-        - Python으로 개발
-        - URL를 입력하여 원하는 기능 선택
-        - 영상 다운로드,오디오 추출 (MP3)
-        - 통계 조회,썸네일 다운로드
-                    `
+            personal4: `
+[ QR Code Generator ]
+-------------------------------
+- GOLANG으로 개발
+- URL을 QR 코드로 변환하여 저장
+- 사용자 인터페이스는 HTML,CSS로 구성
+            `,
+            personal5:`
+[ YOUTUBE DOWNLOAD ]
+-------------------------------
+- Python으로 개발
+- URL를 입력하여 원하는 기능 선택
+- 영상 다운로드,오디오 추출 (MP3)
+- 통계 조회,썸네일 다운로드
+            `,
+            
         };
-        
 
         function showSection(sectionName) {
             const contentDiv = document.getElementById('content');
